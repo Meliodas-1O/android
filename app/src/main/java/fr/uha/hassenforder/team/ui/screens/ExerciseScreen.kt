@@ -4,12 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,15 +23,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.model.Exercise
 import fr.uha.hassenforder.team.model.ExerciseType
 import fr.uha.hassenforder.team.navigation.Routes
-import fr.uha.hassenforder.team.ui.components.OutlinedSpinnerFieldEnum
+import fr.uha.hassenforder.team.ui.components.ExerciseTypeDropdown
+import fr.uha.hassenforder.team.ui.theme.NavyBlue
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -43,23 +42,26 @@ fun ExerciseScreen(navController: NavController) {
     var exerciseDuration by remember { mutableStateOf("") }
     var exerciseImage by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    val exerciseTypes = ExerciseType.values().map { it.name }
 
     Scaffold(
+        containerColor = NavyBlue,
         topBar = {
             TopAppBar(
-                title = { Text("Create Exercise") },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = NavyBlue,
+                    scrolledContainerColor = NavyBlue
+                ),
+                title = { Text("Create Exercise", color = Color.White) },
                 actions = {
                     IconButton(
                         onClick = {
                             // Handle form submission (you can replace this with your logic)
                             val newExercise = Exercise(
-                                name = exerciseName,
-                                type = exerciseType,
-                                duration = exerciseDuration,
-                                image = exerciseImage
+                                exerciseName = exerciseName,
+                                exerciseType = exerciseType,
+                                exerciseDuration = exerciseDuration,
+                                exerciseId = 1
                             )
                             // Print the new exercise details for demonstration
                             println(newExercise)
@@ -75,7 +77,7 @@ fun ExerciseScreen(navController: NavController) {
                             navController.navigate(Routes.EXERCISE.name)
                         }
                     ) {
-                        Icon(Icons.Default.Send, contentDescription = "Send")
+                        Icon(Icons.Default.Send, contentDescription = "Send", tint = Color.White)
                     }
                 }
             )
@@ -90,65 +92,71 @@ fun ExerciseScreen(navController: NavController) {
             // Exercise Name
             OutlinedTextField(
                 value = exerciseName,
+                singleLine = true,
                 onValueChange = { exerciseName = it },
-                label = { Text("Exercise Name") },
+                label = { Text("Exercise Name", color= Color.White) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                    }
-                )
+                    .padding(16.dp),
             )
-            OutlinedSpinnerFieldEnum(
-                value = game.genreState.current,
-                onValueChange = { uiCB.onEvent(GameViewModel.UIEvent.GenreChanged(it)) },
-                modifier = Modifier.fillMaxWidth(),
-                enumValues = Genre.values(),
-                labelId = R.string.genre,
-                errorId = game.genreState.errorId
+            ExerciseTypeDropdown(
+                selectedExerciseType = exerciseType,
+                onExerciseTypeSelected = { newExerciseType ->
+                    exerciseType = newExerciseType
+                }
             )
-            // Display the selected type
-            Text(text = "Selected Type: ${exerciseType.name}")
 
-            // Exercise Duration
             OutlinedTextField(
                 value = exerciseDuration,
+                singleLine = true,
                 onValueChange = { exerciseDuration = it },
-                label = { Text("Exercise Duration") },
+                label = { Text("Exercise Duration",  color= Color.White) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-                    onNext = {
-                        // Move focus to the next field or handle as needed
-                    }
-                )
+                    .padding(16.dp),
             )
 
             // Exercise Image
             OutlinedTextField(
                 value = exerciseImage,
+                singleLine = true,
                 onValueChange = { exerciseImage = it },
-                label = { Text("Exercise Image URL") },
+                label = { Text("Exercise Image URL",  color= Color.White) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                keyboardOptions = KeyboardOptions.Default.copy(
-                    imeAction = ImeAction.Done
+                    .padding(16.dp),
+            )
+
+            Button(
+                colors= ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF002185),
+                    contentColor = Color.White,
                 ),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        // Submit the form or handle as needed
-                        keyboardController?.hide()
-                    }
-                )
+                onClick = {
+                    // Handle form submission (you can replace this with your logic)
+                    val newExercise = Exercise(
+                        exerciseName = exerciseName,
+                        exerciseType = exerciseType,
+                        exerciseDuration = exerciseDuration,
+                        exerciseId = 2
+                    )
+                    // Print the new exercise details for demonstration
+                    println(newExercise)
+
+                    // Clear the form fields
+                    exerciseName = ""
+                    exerciseType = ExerciseType.CARDIO
+                    exerciseDuration = ""
+                    exerciseImage = ""
+
+                    // Hide the keyboard
+                    keyboardController?.hide()
+                    navController.navigate(Routes.EXERCISE.name)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                content = {Text("Create Exercise")}
             )
         }
     }

@@ -20,14 +20,14 @@ fun DualCardRow(
     ) {
         Box(
             modifier = Modifier
-                .weight(1f)
+                .weight(1.05f)
                 .fillMaxWidth()
         ) {
             card1()
         }
         Box(
             modifier = Modifier
-                .weight(1f)
+                .weight(1.05f)
                 .fillMaxWidth()
         ) {
             card2()

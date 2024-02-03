@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.Card
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -35,7 +37,8 @@ fun CustomCard(
     cornerRadius: Dp = 8.dp,
     elevation: Dp = 9.dp,
     shadowColor: Color = Color.Gray,
-    cardHeight: Dp = 200.dp
+    cardHeight: Dp = 150.dp,
+    onClick: () -> Unit
 ) {
     val gradient = Brush.verticalGradient(
         colors = listOf(
@@ -57,24 +60,25 @@ fun CustomCard(
                 .padding(16.dp)
                 .height(cardHeight)
                 .clickable(
-                    onClick = { /* Handle click */ }
+                    onClick = onClick
                 )
                 .fillMaxWidth(),
         ) {
             Text(
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
                 text = title,
                 style = typography.bodyLarge,
                 modifier = Modifier
                     .padding(bottom = 8.dp)
             )
+            Divider(
+                modifier = Modifier
+                    .padding(bottom = 5.dp)
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.Default.DateRange,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary
-                )
                 Spacer(modifier = Modifier.width(8.dp))
             }
             content()

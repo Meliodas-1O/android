@@ -39,7 +39,7 @@ fun HomeScreen(message: String) {
                     containerColor = NavyBlue,
                     scrolledContainerColor = NavyBlue
                 ),
-                title = { Text(text = "Gym App") },
+                title = { Text(text = "Gym App",color = Color.White) },
                 modifier = Modifier.background(Color(0xED0A0F3D)),
                 actions = {
                     IconButton(
@@ -58,15 +58,15 @@ fun HomeScreen(message: String) {
                     .padding(innerPadding)
             ) {
                 item {
-                    MotivationCard(title = "Motivation", text = { Text(motivationText) })
+                    MotivationCard(title = "Motivation", text = { Text(motivationText,color = Color.White) })
                 }
 
                 item {
                     CalorieAndNextSession(
                         caloriesTitle = "Calories Burned Today",
-                        caloriesBurned = { Text(text = "$caloriesBurned Cal") },
+                        caloriesBurned = { Text(text = "$caloriesBurned Cal",color = Color.White) },
                         titleNextSession = "Today Session",
-                        date = { Text(text = nextSessionDate) },
+                        date = { Text(text = nextSessionDate, color = Color.White) },
                     )
                 }
 
@@ -86,7 +86,9 @@ fun MotivationCard(title: String, text: @Composable () -> Unit) {
         cornerRadius = 13.dp,
         elevation = 5.dp,
         shadowColor = ShadowBlue,
-        cardHeight = 100.dp
+        cardHeight = 100.dp,
+        onClick = {}
+
     )
 }
 
@@ -98,7 +100,9 @@ fun CaloriesBurnedCard(title:String, caloriesBurned: @Composable () -> Unit) {
         cornerRadius = 13.dp,
         elevation = 5.dp,
         shadowColor = ShadowBlue,
-        cardHeight = 100.dp
+        cardHeight = 100.dp,
+        onClick = {}
+
     )
 }
 
@@ -117,7 +121,9 @@ fun CaloriesGraph(title: String, chart: @Composable () -> Unit
         cornerRadius = 13.dp,
         elevation = 5.dp,
         shadowColor = ShadowBlue,
-        cardHeight = 250.dp
+        cardHeight = 250.dp,
+        onClick = {}
+
     )
 }
 
@@ -129,6 +135,8 @@ fun NextSessionCard(title: String, date: @Composable () -> Unit) {
         cornerRadius = 13.dp,
         elevation = 5.dp,
         shadowColor = ShadowBlue,
-        cardHeight = 100.dp
+        cardHeight = 100.dp,
+        onClick = {}
+
     )
 }

@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -20,7 +21,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
+fun SearchBar(label: String, searchText: String, onSearchTextChange: (String) -> Unit) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     Row(
@@ -35,7 +36,7 @@ fun SearchBar(searchText: String, onSearchTextChange: (String) -> Unit) {
             onValueChange = {
                 onSearchTextChange(it)
             },
-            label = { Text("Search workout") },
+            label = { Text(text= label, color = Color.White) },
             leadingIcon = {
                 Icon(imageVector = Icons.Default.Search, contentDescription = null)
             },

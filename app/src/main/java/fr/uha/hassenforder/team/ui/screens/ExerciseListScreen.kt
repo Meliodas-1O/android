@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,7 +48,7 @@ fun ExerciseListScreen(navController: NavController) {
                      containerColor = NavyBlue,
                      scrolledContainerColor = NavyBlue
                  ),
-                 title = { Text(text = "Exercises") },
+                 title = { Text(text = "Exercises", color = Color.White) },
                  modifier = Modifier.background(Color(0xED0A0F3D)),
                  actions = {
                      IconButton(
@@ -60,42 +61,46 @@ fun ExerciseListScreen(navController: NavController) {
          },
          floatingActionButton = {
              FloatingActionButton(
-                 containerColor = Color(0xFF002185),
+                 containerColor = Color(0xFF042CA5),
+                 contentColor =  Color.White,
                  onClick = {
                      navController.navigate(Routes.EXERCISE_CREATION.name)
                  },
                  modifier = Modifier
                      .padding(16.dp)
-                     .background(Color(0xED0A0F3D), shape = RoundedCornerShape(16.dp))
 
              ) {
                  Icon(Icons.Default.Add, contentDescription = "Add Exercise")
              }
          },
          content = { innerPadding ->
-             LazyColumn(
-                 modifier = Modifier
-                     .fillMaxSize()
-                     .padding(innerPadding)
-             ) {
-                 item{
-                     SearchBar(
-                         searchText = searchText,
-                         onSearchTextChange = { searchText = it }
-                     )
-                     Spacer(modifier = Modifier.height(16.dp))
-                 }
-                 item {
-                     ExerciseTypeCard()
-                     Spacer(modifier = Modifier.height(16.dp))
+             Column (modifier = Modifier
+                 .fillMaxSize()
+                 .padding(innerPadding)
+             ){
+                 SearchBar(
+                     label = "Search Exercises",
+                     searchText = searchText,
+                     onSearchTextChange = { searchText = it }
+                 )
+                 Spacer(modifier = Modifier.height(16.dp))
+                 LazyColumn(
+                     modifier = Modifier
+                         .fillMaxSize()
+                 ) {
+                     item {
+                         ExerciseTypeCard(navController = navController)
+                         Spacer(modifier = Modifier.height(16.dp))
+                     }
                  }
              }
+
          }
      )
  }
 
 @Composable
-fun ExerciseTypeCard(){
+fun ExerciseTypeCard(navController: NavController){
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,13 +109,20 @@ fun ExerciseTypeCard(){
             card1 = {
                 CustomCard(
                     title = "Cardio",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+                    }
                 )
             },
             card2 = {
                 CustomCard(
                     title = "Strength",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+
+                    }
                 )
             }
         )
@@ -119,28 +131,46 @@ fun ExerciseTypeCard(){
             card1 = {
                 CustomCard(
                     title = "Flexibility",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+
+                    }
                 )
             },
             card2 = {
                 CustomCard(
                     title = "High-Intensity Interval Training",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+
+                    }
+
+
                 )
             }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(5.dp))
         DualCardRow(
             card1 = {
                 CustomCard(
                     title = "Core",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+
+                    }
+
                 )
             },
             card2 = {
                 CustomCard(
                     title = "CrossFit",
-                    content = {}
+                    content = {},
+                    onClick = {
+                        navController.navigate(Routes.EXERCISE_CREATION.name)
+                    }
                 )
             }
         )

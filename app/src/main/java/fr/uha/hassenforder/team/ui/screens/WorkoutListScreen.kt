@@ -2,9 +2,7 @@ package fr.uha.hassenforder.team.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -31,21 +28,41 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.model.Exercise
 import fr.uha.hassenforder.team.model.ExerciseType
+import fr.uha.hassenforder.team.model.Workout
 import fr.uha.hassenforder.team.navigation.Routes
-import fr.uha.hassenforder.team.ui.components.CustomCard
 import fr.uha.hassenforder.team.ui.components.SearchBar
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
-import fr.uha.hassenforder.team.ui.theme.ShadowBlue
+import java.time.LocalDate
+import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutListScreen(navController: NavController) {
     var searchText by remember { mutableStateOf("") }
-    val exercises = listOf(
-        Exercise("Push-ups", ExerciseType.STRENGTH, "5 min", "h"),
-        Exercise("Running", ExerciseType.CARDIO, "20 min", "h"),
-        Exercise("Yoga", ExerciseType.FLEXIBILITY, "15 min", "h")
+    val workoutList = listOf(
+        Workout(
+            workoutId=2,
+            workoutName = "Morning Workout",
+            workoutDuration = "1 hour",
+            caloriesBurned = 300,
+            date = Date(14),
+        ),
+        Workout(
+            workoutId=3,
+            workoutName = "Evening Routine",
+            workoutDuration = "45 mins",
+            caloriesBurned = 250,
+            date = Date(14),
+        ),
+        Workout(
+            workoutId=6,
+            workoutName = "Weekend Workout",
+            workoutDuration = "1.5 hours",
+            caloriesBurned = 400,
+            date = Date(14),
+        )
     )
+
     Scaffold(
         containerColor = NavyBlue,
         modifier = Modifier,
@@ -55,7 +72,7 @@ fun WorkoutListScreen(navController: NavController) {
                     containerColor = NavyBlue,
                     scrolledContainerColor = NavyBlue
                 ),
-                title = { Text(text = "Workout") },
+                title = { Text(text = "Workout", color = Color.White)},
                 modifier = Modifier.background(Color(0xED0A0F3D)),
                 actions = {
                     IconButton(
@@ -71,58 +88,33 @@ fun WorkoutListScreen(navController: NavController) {
                 containerColor = Color(0xFF002185),
                 onClick = {
                     navController.navigate(Routes.WORKOUT_CREATION.name)
-
                 },
                 modifier = Modifier
                     .padding(16.dp)
-                    .background(Color(0xED0A0F3D))
             ) {
                 Icon(Icons.Default.Add, contentDescription = "Add Exercise")
             }
         },
         content = { innerPadding ->
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-            ) {
-                    item {
-                        SearchBar(
-                            searchText = searchText,
-                            onSearchTextChange = { searchText = it })
-                        Spacer(modifier = Modifier.height(16.dp))
+            Column (modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+            ){
+                SearchBar(
+                    label = "Search workout",
+                    searchText = searchText,
+                    onSearchTextChange = { searchText = it }
+                )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    items(workoutList) { workout ->
+                        SessionItem(workout = workout, navController = navController)
                     }
-                    items(exercises) { exercise ->
-                        GymExerciseCard(exercise = exercise)
-                    }
-
+                }
             }
         }
     )
 }
 
-
-@Composable
-fun GymExerciseCard(exercise: Exercise) {
-    CustomCard(
-        title = exercise.name,
-        content = {
-            Column(
-                modifier = Modifier
-                    .padding(start = 16.dp)
-            ) {
-                Text(text = exercise.name, style = MaterialTheme.typography.bodyLarge)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text = exercise.type.name, style = MaterialTheme.typography.bodyLarge)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "Duration: ${exercise.duration}",
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        },
-        cornerRadius = 13.dp,
-        elevation = 5.dp,
-        shadowColor = ShadowBlue
-    )
-}

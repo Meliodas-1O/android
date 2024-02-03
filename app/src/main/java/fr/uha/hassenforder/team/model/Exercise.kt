@@ -1,8 +1,13 @@
 package fr.uha.hassenforder.team.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "exercises")
 data class Exercise(
-    val name: String,
-    val type: ExerciseType,
-    val duration: String,
-    val image: String
+    @PrimaryKey(autoGenerate = true)
+    val exerciseId: Long = 0,
+    val exerciseName: String,
+    val exerciseType: ExerciseType,
+    val exerciseDuration: String,
 )

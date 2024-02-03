@@ -8,6 +8,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import fr.uha.hassenforder.team.navigation.BottomNavigationItem
 import fr.uha.hassenforder.team.navigation.Routes
@@ -25,7 +26,7 @@ fun CreateBottomNavigationBar(
         items.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedItemIndex == index,
-                label = { Text(text = item.title) },
+                label = { Text(text = item.title, color = Color.White)},
                 onClick = {
                     onItemSelected(index)
                     when (index) {
