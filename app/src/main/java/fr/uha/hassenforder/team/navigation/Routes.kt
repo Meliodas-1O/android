@@ -4,5 +4,8 @@ enum class Routes {
     HOME,
     EXERCISE,
     WORKOUT,
-    HISTORY
+    HISTORY,
+    EXERCISE_CREATION,
+    WORKOUT_CREATION,
+    NEXT_SESSIONS
 }

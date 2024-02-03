@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import fr.uha.hassenforder.team.navigation.BottomNavigationItem
 import fr.uha.hassenforder.team.navigation.Routes
+import fr.uha.hassenforder.team.ui.theme.NavyBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,7 +21,7 @@ fun CreateBottomNavigationBar(
     onItemSelected: (Int) -> Unit,
     navController: NavHostController
 ) {
-    NavigationBar {
+    NavigationBar(containerColor = NavyBlue) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
                 selected = selectedItemIndex == index,

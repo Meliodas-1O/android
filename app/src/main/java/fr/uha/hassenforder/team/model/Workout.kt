@@ -1,6 +1,6 @@
 package fr.uha.hassenforder.team.model
 
-data class Session(
+data class Workout(
     val name: String,
     val duration: String,
     val caloriesBurned: Int,

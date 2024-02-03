@@ -1,12 +1,12 @@
 package fr.uha.hassenforder.team.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,34 +21,43 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import fr.uha.hassenforder.team.ui.theme.NavyBlue
 
 @Composable
 fun CustomCard(
     title: String,
-    content: String,
+    content: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    backgroundColor: Color = NavyBlue,
-    cornerRadius: Dp = 0.dp,
-    elevation: Dp = 0.dp,
-    shadowColor: Color = Color.Black,
+    backgroundColor: Color = Color(0xED0A0F3D),
+    cornerRadius: Dp = 8.dp,
+    elevation: Dp = 9.dp,
+    shadowColor: Color = Color.Gray,
+    cardHeight: Dp = 200.dp
 ) {
-    val m = MaterialTheme.colorScheme.primary
+    val gradient = Brush.verticalGradient(
+        colors = listOf(
+            backgroundColor,
+            backgroundColor.copy(alpha = 0.7f)
+        )
+    )
+
     Card(
         modifier = modifier
-            .background(color = backgroundColor)
+            .padding(16.dp)
+            .background(brush = gradient)
             .shadow(elevation, shape = RoundedCornerShape(cornerRadius), spotColor = shadowColor)
-            .fillMaxWidth(),
+            .fillMaxWidth(0.95f)
     ) {
         Column(
             modifier = Modifier
-                .background(color = backgroundColor)
+                .background(brush = gradient)
                 .padding(16.dp)
+                .height(cardHeight)
                 .clickable(
-                    onClick = { Log.d("Bro", "$m") }
+                    onClick = { /* Handle click */ }
                 )
                 .fillMaxWidth(),
         ) {
@@ -67,11 +76,8 @@ fun CustomCard(
                     tint = MaterialTheme.colorScheme.secondary
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = content,
-                    style = typography.bodyLarge,
-                )
             }
+            content()
         }
     }
 }
