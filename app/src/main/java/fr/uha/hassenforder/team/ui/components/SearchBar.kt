@@ -10,12 +10,14 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
@@ -29,7 +31,8 @@ fun SearchBar(label: String, searchText: String, onSearchTextChange: (String) ->
             .fillMaxWidth()
     ) {
         OutlinedTextField(
-            modifier = Modifier
+            textStyle = TextStyle(color = Color.White) ,// Set your desired text color
+                    modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             value = searchText,

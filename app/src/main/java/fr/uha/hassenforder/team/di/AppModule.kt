@@ -7,8 +7,13 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import fr.uha.hassenforder.team.database.ExerciseDAO
+import fr.uha.hassenforder.team.database.ExerciseWorkoutAssociationDAO
 import fr.uha.hassenforder.team.database.WorkoutDAO
 import fr.uha.hassenforder.team.database.WorkoutDatabase
+import fr.uha.hassenforder.team.repository.ExerciseRepository
+import fr.uha.hassenforder.team.repository.ExerciseWorkoutAssociationRepository
+// import fr.uha.hassenforder.team.repository.ExerciseWorkoutAssociationRepository
 import fr.uha.hassenforder.team.repository.WorkoutRepository
 import javax.inject.Singleton
 
@@ -16,6 +21,15 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule{
 
+    @Singleton
+    @Provides
+    fun provideAppDatabase(@ApplicationContext context: Context): WorkoutDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            WorkoutDatabase::class.java,
+            "workout.db"
+        ).build()
+    }
 
     @Singleton
     @Provides
@@ -28,13 +42,26 @@ object AppModule{
         return database.workoutDAO()
     }
 
+
     @Singleton
     @Provides
-    fun provideWorkoutDatabase(@ApplicationContext context: Context): WorkoutDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            WorkoutDatabase::class.java,
-            "workout_database"
-        ).build()
+    fun provideExerciseRepository(exerciseDAO: ExerciseDAO): ExerciseRepository {
+        return ExerciseRepository(exerciseDAO)
+    }
+
+    @Provides
+    fun provideExerciseDAO(database: WorkoutDatabase): ExerciseDAO {
+        return database.exerciseDAO()
+    }
+
+    @Singleton
+    @Provides
+    fun provideExerciseWorkoutAssociationRepository(associationDAO: ExerciseWorkoutAssociationDAO): ExerciseWorkoutAssociationRepository {
+        return ExerciseWorkoutAssociationRepository(associationDAO)
+    }
+
+    @Provides
+    fun provideExerciseWorkoutAssociationDAO(database: WorkoutDatabase): ExerciseWorkoutAssociationDAO {
+        return database.exerciseWorkoutAssociationDAO()
     }
 }

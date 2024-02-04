@@ -25,11 +25,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.model.Exercise
 import fr.uha.hassenforder.team.model.ExerciseType
 import fr.uha.hassenforder.team.model.Workout
 import fr.uha.hassenforder.team.navigation.Routes
+import fr.uha.hassenforder.team.repository.WorkoutViewModel
 import fr.uha.hassenforder.team.ui.components.SearchBar
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
 import java.time.LocalDate
@@ -37,32 +40,12 @@ import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WorkoutListScreen(navController: NavController) {
+fun WorkoutListScreen(
+    workoutViewModel: WorkoutViewModel = hiltViewModel(),
+    navController: NavController) {
     var searchText by remember { mutableStateOf("") }
-    val workoutList = listOf(
-        Workout(
-            workoutId=2,
-            workoutName = "Morning Workout",
-            workoutDuration = "1 hour",
-            caloriesBurned = 300,
-            date = Date(14),
-        ),
-        Workout(
-            workoutId=3,
-            workoutName = "Evening Routine",
-            workoutDuration = "45 mins",
-            caloriesBurned = 250,
-            date = Date(14),
-        ),
-        Workout(
-            workoutId=6,
-            workoutName = "Weekend Workout",
-            workoutDuration = "1.5 hours",
-            caloriesBurned = 400,
-            date = Date(14),
-        )
-    )
-
+    val sessionsStates  = workoutViewModel.workouts.collectAsStateWithLifecycle(initialValue = emptyList())
+    val workoutList = sessionsStates.value
     Scaffold(
         containerColor = NavyBlue,
         modifier = Modifier,
@@ -72,7 +55,7 @@ fun WorkoutListScreen(navController: NavController) {
                     containerColor = NavyBlue,
                     scrolledContainerColor = NavyBlue
                 ),
-                title = { Text(text = "Workout", color = Color.White)},
+                title = { Text(text = "Workout List Screen", color = Color.White)},
                 modifier = Modifier.background(Color(0xED0A0F3D)),
                 actions = {
                     IconButton(
@@ -117,4 +100,6 @@ fun WorkoutListScreen(navController: NavController) {
         }
     )
 }
+
+
 

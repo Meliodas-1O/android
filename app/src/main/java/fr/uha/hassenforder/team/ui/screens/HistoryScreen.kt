@@ -23,9 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.model.Workout
 import fr.uha.hassenforder.team.navigation.Routes
+import fr.uha.hassenforder.team.repository.WorkoutViewModel
 import fr.uha.hassenforder.team.ui.components.CustomCard
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
 import fr.uha.hassenforder.team.ui.theme.ShadowBlue
@@ -33,7 +36,13 @@ import fr.uha.hassenforder.team.ui.theme.ShadowBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HistoryScreen(workoutList: List<Workout>, navController: NavController) {
+fun HistoryScreen(
+    navController: NavController,
+    workoutViewModel: WorkoutViewModel = hiltViewModel(),
+    )
+{
+    val sessionsStates  = workoutViewModel.workouts.collectAsStateWithLifecycle(initialValue = emptyList())
+    val workoutList = sessionsStates.value
     Scaffold(
         containerColor = NavyBlue,
         modifier = Modifier,
@@ -99,7 +108,8 @@ fun SessionItem(workout: Workout, navController: NavController) {
         shadowColor = ShadowBlue,
         cardHeight = 130.dp,
         onClick = {
-            navController.navigate(Routes.LIST_EXERCISE.name + "/${workout.workoutId}")
+            val idToString: String = workout.workoutId.toString();
+            navController.navigate(Routes.LIST_EXERCISE.name+"/WORKOUT/$idToString?name=${workout.workoutName}")
         }
     )
 }

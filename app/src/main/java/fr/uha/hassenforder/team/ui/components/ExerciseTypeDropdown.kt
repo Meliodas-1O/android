@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import fr.uha.hassenforder.team.model.ExerciseType
@@ -31,6 +32,7 @@ fun ExerciseTypeDropdown(
     val dropdownWidth = with(LocalContext.current.resources.displayMetrics) { (240 * density).toInt() }
 
     OutlinedTextField(
+        textStyle = TextStyle(color = Color.White) ,// Set your desired text color
         readOnly = true,
         value = selectedExerciseType.name,
         onValueChange = {},

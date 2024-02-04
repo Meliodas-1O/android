@@ -6,16 +6,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import fr.uha.hassenforder.team.model.Exercise
+import fr.uha.hassenforder.team.model.ExerciseWorkoutAssociation
 import fr.uha.hassenforder.team.model.Workout
 @TypeConverters(value = [DateConverter::class])
 @Database(
-    entities = [Workout::class,Exercise::class],
+    entities = [Workout::class,Exercise::class, ExerciseWorkoutAssociation::class],
     version = 1,
     exportSchema = false,
 )
 abstract class WorkoutDatabase : RoomDatabase(){
     abstract fun workoutDAO():WorkoutDAO
     abstract fun exerciseDAO():ExerciseDAO
+    abstract fun exerciseWorkoutAssociationDAO(): ExerciseWorkoutAssociationDAO
+
     companion object{
         @Volatile
         var INSTANCE:WorkoutDatabase? = null

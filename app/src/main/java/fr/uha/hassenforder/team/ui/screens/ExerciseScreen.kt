@@ -25,25 +25,29 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.model.Exercise
 import fr.uha.hassenforder.team.model.ExerciseType
 import fr.uha.hassenforder.team.navigation.Routes
+import fr.uha.hassenforder.team.repository.ExerciseViewModel
 import fr.uha.hassenforder.team.ui.components.ExerciseTypeDropdown
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
+import kotlin.random.Random
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 
-fun ExerciseScreen(navController: NavController) {
+fun ExerciseScreen(
+    exerciseViewModel: ExerciseViewModel = hiltViewModel(),
+    navController: NavController) {
     var exerciseName by remember { mutableStateOf("") }
     var exerciseType by remember { mutableStateOf(ExerciseType.CARDIO) }
     var exerciseDuration by remember { mutableStateOf("") }
-    var exerciseImage by remember { mutableStateOf("") }
 
     val keyboardController = LocalSoftwareKeyboardController.current
-
     Scaffold(
         containerColor = NavyBlue,
         topBar = {
@@ -61,16 +65,13 @@ fun ExerciseScreen(navController: NavController) {
                                 exerciseName = exerciseName,
                                 exerciseType = exerciseType,
                                 exerciseDuration = exerciseDuration,
-                                exerciseId = 1
                             )
-                            // Print the new exercise details for demonstration
+                            exerciseViewModel.insertExercise(newExercise)
                             println(newExercise)
 
-                            // Clear the form fields
                             exerciseName = ""
                             exerciseType = ExerciseType.CARDIO
                             exerciseDuration = ""
-                            exerciseImage = ""
 
                             // Hide the keyboard
                             keyboardController?.hide()
@@ -91,6 +92,7 @@ fun ExerciseScreen(navController: NavController) {
         ) {
             // Exercise Name
             OutlinedTextField(
+                textStyle = TextStyle(color = Color.White) ,// Set your desired text color
                 value = exerciseName,
                 singleLine = true,
                 onValueChange = { exerciseName = it },
@@ -107,6 +109,7 @@ fun ExerciseScreen(navController: NavController) {
             )
 
             OutlinedTextField(
+                textStyle = TextStyle(color = Color.White) ,// Set your desired text color
                 value = exerciseDuration,
                 singleLine = true,
                 onValueChange = { exerciseDuration = it },
@@ -116,16 +119,6 @@ fun ExerciseScreen(navController: NavController) {
                     .padding(16.dp),
             )
 
-            // Exercise Image
-            OutlinedTextField(
-                value = exerciseImage,
-                singleLine = true,
-                onValueChange = { exerciseImage = it },
-                label = { Text("Exercise Image URL",  color= Color.White) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-            )
 
             Button(
                 colors= ButtonDefaults.buttonColors(
@@ -138,16 +131,14 @@ fun ExerciseScreen(navController: NavController) {
                         exerciseName = exerciseName,
                         exerciseType = exerciseType,
                         exerciseDuration = exerciseDuration,
-                        exerciseId = 2
                     )
-                    // Print the new exercise details for demonstration
                     println(newExercise)
+                    exerciseViewModel.insertExercise(newExercise)
 
                     // Clear the form fields
                     exerciseName = ""
                     exerciseType = ExerciseType.CARDIO
                     exerciseDuration = ""
-                    exerciseImage = ""
 
                     // Hide the keyboard
                     keyboardController?.hide()
