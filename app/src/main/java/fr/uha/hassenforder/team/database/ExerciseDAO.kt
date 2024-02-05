@@ -34,9 +34,9 @@ interface ExerciseDAO{
     suspend fun delete(exercise: Exercise)
     @Query("SELECT * FROM exercises WHERE exerciseId =:id")
     fun getOne(id:Long): Flow<Exercise>
-
     @Query("SELECT * FROM exercises WHERE exerciseType = :type")
     fun getExercisesByType(type: ExerciseType): Flow<List<Exercise>>
     @Query("SELECT * FROM exercises WHERE exerciseName LIKE :pattern || '%'")
     fun getExercisesStartingWith(pattern: String): Flow<List<Exercise>>
+
 }

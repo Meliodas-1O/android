@@ -1,5 +1,6 @@
 package fr.uha.hassenforder.team.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,27 +27,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import fr.uha.hassenforder.team.model.Exercise
-import fr.uha.hassenforder.team.model.ExerciseType
+import fr.uha.hassenforder.team.helpers.Utils.createWorkoutDomainFromWorkouts
 import fr.uha.hassenforder.team.model.Workout
 import fr.uha.hassenforder.team.navigation.Routes
-import fr.uha.hassenforder.team.repository.WorkoutViewModel
 import fr.uha.hassenforder.team.ui.components.SearchBar
+import fr.uha.hassenforder.team.ui.components.SessionItem
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
-import java.time.LocalDate
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WorkoutListScreen(
-    workoutViewModel: WorkoutViewModel = hiltViewModel(),
+    workouts: List<Workout>,
     navController: NavController) {
     var searchText by remember { mutableStateOf("") }
-    val sessionsStates  = workoutViewModel.workouts.collectAsStateWithLifecycle(initialValue = emptyList())
-    val workoutList = sessionsStates.value
+    val workoutList = workouts
+    val workoutDomains = createWorkoutDomainFromWorkouts(workoutList)
+
+    val filteredWorkouts by remember(workoutDomains, searchText) {
+        derivedStateOf {
+            workoutDomains.filter { workout ->
+                workout.workout.workoutName.startsWith(searchText, ignoreCase = true)
+            }
+        }
+    }
+    Log.d("HELLO", workoutDomains.toString())
+    Log.d("HOLLA", workouts.toString())
     Scaffold(
         containerColor = NavyBlue,
         modifier = Modifier,
@@ -69,6 +76,7 @@ fun WorkoutListScreen(
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = Color(0xFF002185),
+                contentColor = Color.White,
                 onClick = {
                     navController.navigate(Routes.WORKOUT_CREATION.name)
                 },
@@ -92,7 +100,7 @@ fun WorkoutListScreen(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    items(workoutList) { workout ->
+                    items(filteredWorkouts) { workout ->
                         SessionItem(workout = workout, navController = navController)
                     }
                 }

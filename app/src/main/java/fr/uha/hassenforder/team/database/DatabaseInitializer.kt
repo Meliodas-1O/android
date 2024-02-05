@@ -26,8 +26,6 @@ fun createWorkoutsList(): List<Workout> {
 
         val workout = Workout(
             workoutName = "Workout $i",
-            workoutDuration = "30 minutes",
-            caloriesBurned = (200..500).random(),
             date = workoutDate.time
         )
         workouts.add(workout)
@@ -43,27 +41,29 @@ fun createExerciseWorkoutAssociationsList(): List<ExerciseWorkoutAssociation> {
     return associations
 }
 
+
 val exercises = listOf(
-    Exercise(exerciseName = "Running", exerciseType = ExerciseType.CARDIO, exerciseDuration = "30 minutes"),
-    Exercise(exerciseName = "Push-ups", exerciseType = ExerciseType.STRENGTH, exerciseDuration = "15 minutes"),
-    Exercise(exerciseName = "Yoga", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = "45 minutes"),
-    Exercise(exerciseName = "HIIT", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = "20 minutes"),
-    Exercise(exerciseName = "Plank", exerciseType = ExerciseType.CORE, exerciseDuration = "5 minutes"),
-    Exercise(exerciseName = "Cycling", exerciseType = ExerciseType.CARDIO, exerciseDuration = "45 minutes"),
-    Exercise(exerciseName = "Squats", exerciseType = ExerciseType.STRENGTH, exerciseDuration = "20 minutes"),
-    Exercise(exerciseName = "Pilates", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = "40 minutes"),
-    Exercise(exerciseName = "Jumping Jacks", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = "15 minutes"),
-    Exercise(exerciseName = "Russian Twists", exerciseType = ExerciseType.CORE, exerciseDuration = "10 minutes"),
-    Exercise(exerciseName = "Swimming", exerciseType = ExerciseType.CARDIO, exerciseDuration = "1 hour"),
-    Exercise(exerciseName = "Pull-ups", exerciseType = ExerciseType.STRENGTH, exerciseDuration = "15 minutes"),
-    Exercise(exerciseName = "Stretching", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = "30 minutes"),
-    Exercise(exerciseName = "Burpees", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = "20 minutes"),
-    Exercise(exerciseName = "Leg Raises", exerciseType = ExerciseType.CORE, exerciseDuration = "10 minutes"),
-    Exercise(exerciseName = "Rowing", exerciseType = ExerciseType.CARDIO, exerciseDuration = "45 minutes"),
-    Exercise(exerciseName = "Deadlifts", exerciseType = ExerciseType.STRENGTH, exerciseDuration = "25 minutes"),
-    Exercise(exerciseName = "Tai Chi", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = "50 minutes"),
-    Exercise(exerciseName = "Mountain Climbers", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = "15 minutes"),
-    Exercise(exerciseName = "Crunches", exerciseType = ExerciseType.CORE, exerciseDuration = "10 minutes"),
+    Exercise(exerciseName = "Running", exerciseType = ExerciseType.CARDIO, exerciseDuration = 30),
+    Exercise(exerciseName = "Push-ups", exerciseType = ExerciseType.STRENGTH, exerciseDuration = 15),
+    Exercise(exerciseName = "Yoga", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = 45),
+    Exercise(exerciseName = "HIIT", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = 20),
+    Exercise(exerciseName = "Plank", exerciseType = ExerciseType.CORE, exerciseDuration = 5),
+    Exercise(exerciseName = "Cycling", exerciseType = ExerciseType.CARDIO, exerciseDuration = 45),
+    Exercise(exerciseName = "Squats", exerciseType = ExerciseType.STRENGTH, exerciseDuration = 20),
+    Exercise(exerciseName = "Pilates", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = 40),
+    Exercise(exerciseName = "Jumping Jacks", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = 15),
+    Exercise(exerciseName = "Russian Twists", exerciseType = ExerciseType.CORE, exerciseDuration = 10),
+    Exercise(exerciseName = "Swimming", exerciseType = ExerciseType.CARDIO, exerciseDuration = 60),
+    Exercise(exerciseName = "Pull-ups", exerciseType = ExerciseType.STRENGTH, exerciseDuration = 15),
+    Exercise(exerciseName = "Stretching", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = 30),
+    Exercise(exerciseName = "Burpees", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = 20),
+    Exercise(exerciseName = "Leg Raises", exerciseType = ExerciseType.CORE, exerciseDuration = 10),
+    Exercise(exerciseName = "Rowing", exerciseType = ExerciseType.CARDIO, exerciseDuration = 45),
+    Exercise(exerciseName = "Deadlifts", exerciseType = ExerciseType.STRENGTH, exerciseDuration = 25),
+    Exercise(exerciseName = "Tai Chi", exerciseType = ExerciseType.FLEXIBILITY, exerciseDuration = 50),
+    Exercise(exerciseName = "Mountain Climbers", exerciseType = ExerciseType.HIGH_INTENSITY_INTERVAL_TRAINING, exerciseDuration = 15),
+    Exercise(exerciseName = "Crunches", exerciseType = ExerciseType.CORE, exerciseDuration = 10)
+
 )
 
 

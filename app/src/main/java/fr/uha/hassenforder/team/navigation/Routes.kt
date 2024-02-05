@@ -12,5 +12,6 @@ enum class Routes {
     NEXT_SESSIONS,
     LIST_EXERCISE,
 
-    EXERCISE_DETAIL
+    EXERCISE_DETAIL,
+    WORKOUT_DETAIL,
 }

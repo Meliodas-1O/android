@@ -1,6 +1,7 @@
 package fr.uha.hassenforder.team
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -18,19 +19,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import fr.uha.hassenforder.team.model.Workout
 import fr.uha.hassenforder.team.ui.components.CustomCard
 import fr.uha.hassenforder.team.ui.components.DualCardRow
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
 import fr.uha.hassenforder.team.ui.theme.ShadowBlue
+import kotlin.time.ExperimentalTime
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalTime::class)
 @Composable
-fun HomeScreen(message: String) {
-    val motivationText = "Stay motivated and make progress every day!"
-    val caloriesBurned = 500
-    val nextSessionDate = "No Session"
+fun HomeScreen(
+    caloriesBurnedPerDay :  List<Pair<String, Double>>,
+    nextWorkout : Workout?,
+    calories : Int,
+    ) {
 
+    val motivationText = "Stay motivated and make progress every day!"
+    val nextSessionDate = nextWorkout?.workoutName ?: "No Session"
+
+    Log.d("HOLAAAAAAA", caloriesBurnedPerDay.toString())
     Scaffold(
         containerColor = NavyBlue,
         topBar = {
@@ -43,7 +51,7 @@ fun HomeScreen(message: String) {
                 modifier = Modifier.background(Color(0xED0A0F3D)),
                 actions = {
                     IconButton(
-                        onClick = { /* Handle navigation to notifications */ }
+                        onClick = {}
                     ) {
                         Icon(Icons.Default.FitnessCenter, contentDescription = null)
                     }
@@ -62,16 +70,18 @@ fun HomeScreen(message: String) {
                 }
 
                 item {
-                    CalorieAndNextSession(
-                        caloriesTitle = "Calories Burned Today",
-                        caloriesBurned = { Text(text = "$caloriesBurned Cal",color = Color.White) },
-                        titleNextSession = "Today Session",
+
+                    NextSessionCard(title = "Next Session", date = { Text(text = nextSessionDate, color = Color.White) })
+                    /*CalorieAndNextSession(
+                        caloriesTitle = "Calories burned",
+                        caloriesBurned = { Text(text = "$calories Cal",color = Color.White) },
+                        titleNextSession = "Next Session",
                         date = { Text(text = nextSessionDate, color = Color.White) },
-                    )
+                    )*/
                 }
 
                 item {
-                    CaloriesGraph(title= "Calories Burned Variation", chart = { LineChartWithTheme()})
+                    CaloriesGraph(title= "Calories Burned Variation", chart = { LineChartWithTheme(caloriesBurnedPerDay)})
                 }
             }
         }
@@ -88,8 +98,7 @@ fun MotivationCard(title: String, text: @Composable () -> Unit) {
         shadowColor = ShadowBlue,
         cardHeight = 100.dp,
         onClick = {}
-
-    )
+    ) {}
 }
 
 @Composable
@@ -103,7 +112,7 @@ fun CaloriesBurnedCard(title:String, caloriesBurned: @Composable () -> Unit) {
         cardHeight = 100.dp,
         onClick = {}
 
-    )
+    ) {}
 }
 
 @Composable
@@ -123,8 +132,7 @@ fun CaloriesGraph(title: String, chart: @Composable () -> Unit
         shadowColor = ShadowBlue,
         cardHeight = 250.dp,
         onClick = {}
-
-    )
+    ) {}
 }
 
 @Composable
@@ -137,6 +145,5 @@ fun NextSessionCard(title: String, date: @Composable () -> Unit) {
         shadowColor = ShadowBlue,
         cardHeight = 100.dp,
         onClick = {}
-
-    )
+    ) {}
 }

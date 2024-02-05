@@ -35,19 +35,18 @@ fun createBottomNavigationItems(): List<BottomNavigationItem> {
             selectedIcon = Icons.Filled.SportsGymnastics,
             unselectedIcon = Icons.Outlined.SportsGymnastics,
             hasNews = false,
-            badgeCount = 554
         ),
         BottomNavigationItem(
             title = "Workout",
             selectedIcon = Icons.Filled.FitnessCenter,
             unselectedIcon = Icons.Outlined.FitnessCenter,
-            hasNews = true
+            hasNews = false
         ),
         BottomNavigationItem(
             title = "History",
             selectedIcon = Icons.Filled.History,
             unselectedIcon = Icons.Outlined.History,
-            hasNews = true
+            hasNews = false
         )
     )
 }

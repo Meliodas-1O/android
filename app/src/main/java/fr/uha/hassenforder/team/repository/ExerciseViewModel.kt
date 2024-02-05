@@ -33,6 +33,11 @@ class ExerciseViewModel @Inject constructor(private val exerciseRepository: Exer
             exerciseRepository.insert(exercise)
         }
     }
+    fun deleteExercise(exercise: Exercise){
+        viewModelScope.launch(Dispatchers.IO) {
+            exerciseRepository.delete(exercise)
+        }
+    }
     fun getExercisesByType(type: ExerciseType): Flow<List<Exercise>> {
         return exerciseRepository.getExercisesByType(type)
     }
@@ -42,4 +47,16 @@ class ExerciseViewModel @Inject constructor(private val exerciseRepository: Exer
     fun getExercisesStartingWith(pattern: String): Flow<List<Exercise>> {
         return exerciseRepository.getExercisesStartingWith(pattern)
     }
+
+    fun getExerciseById(exerciseId: Long):Flow<Exercise> {
+        return exerciseRepository.getOne(exerciseId);
+    }
+
+    fun updateExercise(updatedExercise: Exercise){
+        viewModelScope.launch(Dispatchers.IO) {
+            exerciseRepository.update(updatedExercise)
+        }
+    }
+
+
 }

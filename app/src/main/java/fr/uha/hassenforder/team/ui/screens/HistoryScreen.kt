@@ -1,9 +1,7 @@
 package fr.uha.hassenforder.team.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -26,12 +24,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import fr.uha.hassenforder.team.model.Workout
-import fr.uha.hassenforder.team.navigation.Routes
+import fr.uha.hassenforder.team.helpers.Utils
 import fr.uha.hassenforder.team.repository.WorkoutViewModel
-import fr.uha.hassenforder.team.ui.components.CustomCard
+import fr.uha.hassenforder.team.ui.components.SessionItem
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
-import fr.uha.hassenforder.team.ui.theme.ShadowBlue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,8 +37,9 @@ fun HistoryScreen(
     workoutViewModel: WorkoutViewModel = hiltViewModel(),
     )
 {
-    val sessionsStates  = workoutViewModel.workouts.collectAsStateWithLifecycle(initialValue = emptyList())
+    val sessionsStates  = workoutViewModel.getHistory().collectAsStateWithLifecycle(initialValue = emptyList())
     val workoutList = sessionsStates.value
+    val workoutDomains = Utils.createWorkoutDomainFromWorkouts(workoutList)
     Scaffold(
         containerColor = NavyBlue,
         modifier = Modifier,
@@ -70,7 +67,7 @@ fun HistoryScreen(
                             .fillMaxSize()
                     ){
                         items(
-                            workoutList.groupBy { it.date.toString() }.toList()
+                            workoutDomains.groupBy { it.workout.date.toString() }.toList()
                         ) { (date, sessionsForDate) ->
                             Text(
                                 color = Color.White,
@@ -80,7 +77,7 @@ fun HistoryScreen(
                                 modifier = Modifier.padding(16.dp)
                             )
                             sessionsForDate.forEach { session ->
-                                SessionItem(workout = session, navController = navController)
+                               SessionItem(workout = session, navController = navController)
                             }
                             Divider()
                         }
@@ -89,27 +86,3 @@ fun HistoryScreen(
     )
 }
 
-@Composable
-fun SessionItem(workout: Workout, navController: NavController) {
-    CustomCard(
-        title = "Session Name: ${workout.workoutName}",
-        content =  {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(text = "Duration: ${workout.workoutDuration}",color = Color.White)
-                Text(text = "Calories Burned: ${workout.caloriesBurned}",color = Color.White)
-            }
-        },
-        cornerRadius = 13.dp,
-        elevation = 5.dp,
-        shadowColor = ShadowBlue,
-        cardHeight = 130.dp,
-        onClick = {
-            val idToString: String = workout.workoutId.toString();
-            navController.navigate(Routes.LIST_EXERCISE.name+"/WORKOUT/$idToString?name=${workout.workoutName}")
-        }
-    )
-}

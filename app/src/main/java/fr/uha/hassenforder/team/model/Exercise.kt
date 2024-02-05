@@ -9,5 +9,5 @@ data class Exercise(
     val exerciseId: Long = 0,
     val exerciseName: String,
     val exerciseType: ExerciseType,
-    val exerciseDuration: String,
+    val exerciseDuration: Int,
 )

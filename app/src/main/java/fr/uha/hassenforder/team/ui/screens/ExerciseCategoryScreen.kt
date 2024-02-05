@@ -26,13 +26,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import fr.uha.hassenforder.team.navigation.Routes
-import fr.uha.hassenforder.team.repository.ExerciseViewModel
-import fr.uha.hassenforder.team.ui.components.CustomCard
-import fr.uha.hassenforder.team.ui.components.DualCardRow
+import fr.uha.hassenforder.team.ui.components.ExerciseTypeCard
 import fr.uha.hassenforder.team.ui.components.SearchBar
 import fr.uha.hassenforder.team.ui.theme.NavyBlue
 
@@ -81,11 +77,7 @@ fun ExerciseCategoryScreen(
                  .fillMaxSize()
                  .padding(innerPadding)
              ){
-                 SearchBar(
-                     label = "Search Exercises",
-                     searchText = searchText,
-                     onSearchTextChange = { searchText = it }
-                 )
+
                  Spacer(modifier = Modifier.height(16.dp))
                  LazyColumn(
                      modifier = Modifier
@@ -101,82 +93,3 @@ fun ExerciseCategoryScreen(
          }
      )
  }
-
-@Composable
-fun ExerciseTypeCard(navController: NavController){
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        DualCardRow(
-            card1 = {
-                CustomCard(
-                    title = "Cardio",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/CARDIO")
-                    }
-                )
-            },
-            card2 = {
-                CustomCard(
-                    title = "Strength",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/STRENGTH")
-
-                    }
-                )
-            }
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        DualCardRow(
-            card1 = {
-                CustomCard(
-                    title = "Flexibility",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/FLEXIBILITY")
-
-                    }
-                )
-            },
-            card2 = {
-                CustomCard(
-                    title = "High-Intensity Interval Training",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/HIGH_INTENSITY_INTERVAL_TRAINING")
-
-                    }
-
-
-                )
-            }
-        )
-        Spacer(modifier = Modifier.height(5.dp))
-        DualCardRow(
-            card1 = {
-                CustomCard(
-                    title = "Core",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/CORE")
-
-                    }
-
-                )
-            },
-            card2 = {
-                CustomCard(
-                    title = "CrossFit",
-                    content = {},
-                    onClick = {
-                        navController.navigate(Routes.LIST_EXERCISE.name+"/TYPE/CROSSFIT")
-                    }
-                )
-            }
-        )
-    }
-}
